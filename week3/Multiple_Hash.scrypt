@@ -1,0 +1,17 @@
+contract MultiPartyHashPuzzlesCompact {
+    // only 1 hash needs to go into the locking script, saving space
+    Sha256 combinedHash; // combinedHash = b'C9392767AB23CEFF09D207B9223C0C26F01A7F81F8C187A821A4266F8020064D'
+
+    // preimage1: e.g., "bsv" -> b'627376'
+    // preimage2: e.g., "sCrypt" -> b'734372797074'
+    // preimage3: e.g., "IDE" -> b'494445'
+    public function unlock(bytes preimage1, bytes preimage2, bytes preimage3) {
+        Sha256 hash1 = sha256(preimage1);
+        Sha256 hash2 = sha256(preimage2);
+        Sha256 hash3 = sha256(preimage3);
+        Sha256 hash12 = sha256(hash1 + hash2);
+        Sha256 hash123 = sha256(hash12 + hash3);
+
+        require(hash123 == this.combinedHash);
+    }
+}

@@ -1,20 +1,8 @@
 // Copyright 2017 The go-ethereum Authors
 // This file is part of the go-ethereum library.
-//
-// The go-ethereum library is free software: you can redistribute it and/or modify
-// it under the terms of the GNU Lesser General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// The go-ethereum library is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU Lesser General Public License for more details.
-//
-// You should have received a copy of the GNU Lesser General Public License
-// along with the go-ethereum library. If not, see <http://www.gnu.org/licenses/>.
 
-// Package consensus implements different Ethereum consensus engines.
+
+// Package yagn diperlukan untuk membuat consensus
 package consensus
 
 import (
@@ -27,104 +15,81 @@ import (
 	"github.com/ethereum/go-ethereum/rpc"
 )
 
-// ChainHeaderReader defines a small collection of methods needed to access the local
-// blockchain during header verification.
+// memdefenisikan methode yang akan digunakan
 type ChainHeaderReader interface {
-	// Config retrieves the blockchain's chain configuration.
+	// mengambil rantai blockchain
 	Config() *params.ChainConfig
 
-	// CurrentHeader retrieves the current header from the local chain.
+	// Mengambil header dari chain lokal
 	CurrentHeader() *types.Header
 
-	// GetHeader retrieves a block header from the database by hash and number.
+	// Mengambil header dari blok dari database dengan hash dan nomor
 	GetHeader(hash common.Hash, number uint64) *types.Header
 
-	// GetHeaderByNumber retrieves a block header from the database by number.
+	// Mengambil header block dari database hanya dengan nomor
 	GetHeaderByNumber(number uint64) *types.Header
 
-	// GetHeaderByHash retrieves a block header from the database by its hash.
+	//Mengambil header block dari database hanya dengan hash
 	GetHeaderByHash(hash common.Hash) *types.Header
 
-	// GetTd retrieves the total difficulty from the database by hash and number.
+	// Mengambil semua data yang sulit dari database dengan hash dan nomor
 	GetTd(hash common.Hash, number uint64) *big.Int
 }
 
-// ChainReader defines a small collection of methods needed to access the local
-// blockchain during header and/or uncle verification.
+// ChainReader mendefenisikan kumpulan kecil methode untuk mengakses chain lokal
+// verifikasi header
 type ChainReader interface {
 	ChainHeaderReader
 
-	// GetBlock retrieves a block from the database by hash and number.
+	// mengambil blok dari database dengan hash dan nomor
 	GetBlock(hash common.Hash, number uint64) *types.Block
 }
 
-// Engine is an algorithm agnostic consensus engine.
+// algoritma consensus
 type Engine interface {
-	// Author retrieves the Ethereum address of the account that minted the given
-	// block, which may be different from the header's coinbase if a consensus
-	// engine is based on signatures.
+	//penulis akan mengambil alamat ethereum dari akun yang mungkin akan terjadi error jika terdapat perbedaan header hal ini akan di dasari dari signature
 	Author(header *types.Header) (common.Address, error)
 
-	// VerifyHeader checks whether a header conforms to the consensus rules of a
-	// given engine. Verifying the seal may be done optionally here, or explicitly
-	// via the VerifySeal method.
+	//melakukan verifikasi pada header yang memiliki signature dengan metode verifikasi seal
 	VerifyHeader(chain ChainHeaderReader, header *types.Header, seal bool) error
 
-	// VerifyHeaders is similar to VerifyHeader, but verifies a batch of headers
-	// concurrently. The method returns a quit channel to abort the operations and
-	// a results channel to retrieve the async verifications (the order is that of
-	// the input slice).
+	//memverifikasi sekumpulan header secara bersamaan sehingga bisa untuk membatalkan operasi dan mengambil verivikasi yang ter urut
 	VerifyHeaders(chain ChainHeaderReader, headers []*types.Header, seals []bool) (chan<- struct{}, <-chan error)
 
-	// VerifyUncles verifies that the given block's uncles conform to the consensus
-	// rules of a given engine.
+	//memberikan informasi bahwa verifikasi yang dilakukan sesuai dengan consesus
 	VerifyUncles(chain ChainReader, block *types.Block) error
 
-	// Prepare initializes the consensus fields of a block header according to the
-	// rules of a particular engine. The changes are executed inline.
+	//menginisialisasi consensus dari blok header
 	Prepare(chain ChainHeaderReader, header *types.Header) error
 
-	// Finalize runs any post-transaction state modifications (e.g. block rewards)
-	// but does not assemble the block.
-	//
-	// Note: The block header and state database might be updated to reflect any
-	// consensus rules that happen at finalization (e.g. block rewards).
+	//melakukan modifikasi setelah transaksi dilakukan 
 	Finalize(chain ChainHeaderReader, header *types.Header, state *state.StateDB, txs []*types.Transaction,
 		uncles []*types.Header)
 
-	// FinalizeAndAssemble runs any post-transaction state modifications (e.g. block
-	// rewards) and assembles the final block.
-	//
-	// Note: The block header and state database might be updated to reflect any
-	// consensus rules that happen at finalization (e.g. block rewards).
+	//melakukan modifikasi setelah transaksi dilakukan , header blok dan data mungkin akan diperbaharui
 	FinalizeAndAssemble(chain ChainHeaderReader, header *types.Header, state *state.StateDB, txs []*types.Transaction,
 		uncles []*types.Header, receipts []*types.Receipt) (*types.Block, error)
 
-	// Seal generates a new sealing request for the given input block and pushes
-	// the result into the given channel.
-	//
-	// Note, the method returns immediately and will send the result async. More
-	// than one result may also be returned depending on the consensus algorithm.
+	//seal akan menghasilkan permintaan penyegelan baru untuk blok dan pada metode ini akan mengirimkan hasil asyn kembali
 	Seal(chain ChainHeaderReader, block *types.Block, results chan<- *types.Block, stop <-chan struct{}) error
 
-	// SealHash returns the hash of a block prior to it being sealed.
+	//seal akan mengembalikan hash dari sebuah blok sebelum disegel
 	SealHash(header *types.Header) common.Hash
 
-	// CalcDifficulty is the difficulty adjustment algorithm. It returns the difficulty
-	// that a new block should have.
+	//ini adalah algoritma untuk membuat teka teki Proof of Work
 	CalcDifficulty(chain ChainHeaderReader, time uint64, parent *types.Header) *big.Int
 
-	// APIs returns the RPC APIs this consensus engine provides.
+	// mengembalikan API RPC
 	APIs(chain ChainHeaderReader) []rpc.API
 
-	// Close terminates any background threads maintained by the consensus engine.
+	// penutup
 	Close() error
 }
 
-// PoW is a consensus engine based on proof-of-work.
+// Pow menjadi pembuktian consensus pada saat melakukan transaksi
 type PoW interface {
 	Engine
 
-	// Hashrate returns the current mining hashrate of a PoW consensus engine.
+	//mengembalikan nilai hash
 	Hashrate() float64
 }

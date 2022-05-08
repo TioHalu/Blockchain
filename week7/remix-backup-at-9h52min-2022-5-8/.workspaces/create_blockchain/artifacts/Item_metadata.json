@@ -1,0 +1,120 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "contract ItemManager",
+						"name": "_parentContract",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_priceInWei",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_index",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"stateMutability": "nonpayable",
+				"type": "fallback"
+			},
+			{
+				"inputs": [],
+				"name": "index",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "paidWei",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "priceInWei",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Item.sol": "Item"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Item.sol": {
+			"keccak256": "0xf68630230dc732ca23158013747cbe9088b0194cfff1bb638450378941b3d970",
+			"urls": [
+				"bzz-raw://a3a1a199fbeb420dc7b2154512baeb57d16ef82903b6938e3056dea86cf663da",
+				"dweb:/ipfs/QmdeYUysP9myDRdRjht8YeagaJQ7fmHrSYrBdJYD5EXakC"
+			]
+		},
+		"ItemManager.sol": {
+			"keccak256": "0xca8e1843341c26f6ed69f21493a5acb1d7bd7828b8d59bd5d46cd9e0615d2de5",
+			"urls": [
+				"bzz-raw://0f8df20b0c4834005268e5bf3e205d787353953db4f4be4c6859c6cc7b58233c",
+				"dweb:/ipfs/QmeQNaBU96Kd8JEL4pZqXTdJymKKMnP3n7ooHVFHL1beMC"
+			]
+		}
+	},
+	"version": 1
+}

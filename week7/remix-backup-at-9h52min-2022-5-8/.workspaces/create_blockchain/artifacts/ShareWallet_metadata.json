@@ -1,0 +1,63 @@
+{
+	"compiler": {
+		"version": "0.8.1+commit.df193b15"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrawMoney",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"ShareWallet.sol": "ShareWallet"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"ShareWallet.sol": {
+			"keccak256": "0x4a810ee79ba546e92e605f2539bf857b277d113908c170e897577dda393ea675",
+			"urls": [
+				"bzz-raw://7a940e026c304bc4fd331cadce241785de4df259fab7baa994635a99b8f3bc4a",
+				"dweb:/ipfs/QmSzJu3nuU27PCmQMQHVyYxuw96M9911RA2kmB58CTL5jn"
+			]
+		}
+	},
+	"version": 1
+}
